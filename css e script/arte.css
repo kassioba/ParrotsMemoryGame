@@ -35,16 +35,36 @@ body {
     border: 1px solid #99CEA8;
     border-radius: 5px;
     box-sizing: border-box;
-    margin: auto 17px;
+    margin: 10px 17px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+        transition: all 1s linear;
+    }
+    
+    
+    
+    .virar {
+        transform: rotatey(180deg);
+    }
+    
+    
+    
+    
+    .frente {
+        height: 100%;
+        width: 100%;
 }
 
+.desativado {
+    display: none;
+}
 div img {
     width: 100px;
     height: 100px;
 }
+
 
 @media(max-width: 1091px) {
     .container-cartas {
