@@ -45,11 +45,14 @@ imagensEscolhidas.sort(comparador);
 console.log(imagensEscolhidas);
 for (contador = 0; contador < qtdeDeCartas; contador++) {
   container.innerHTML += `
-  <div class='carta' onclick="virarCarta(this)">
-    <div class="verso"><img src="./ícones/back.png" alt=""></div>
-    <div class="frente desativado"><img src="${imagensEscolhidas[contador]}" alt="" class="img-verso"></div>
-  </div>`;
+      <div class='carta' onclick="virarCarta(this)">
+        <div class="verso"><img src="./ícones/back.png" alt=""></div>
+        <div class="frente desativado"><img src="${imagensEscolhidas[contador]}" alt="" class="img-verso"></div>
+      </div>
+  `;
 }
+
+console.log(container);
 
 const cartasViradas = [];
 
@@ -57,37 +60,43 @@ let cartaVirada = undefined;
 const cartasSelecionadas = [];
 let indice = 0;
 let cartasClicadas = undefined;
+let qtdeVirar = undefined;
+const qtdeDeJogadas = [];
 
 function virarCarta(elemento) {
+  elemento.removeAttribute("onClick");
   elemento.classList.add("virar");
   elemento.classList.add("selecionado");
-  /*elemento.querySelector(".verso").classList.add("desativado");
-  elemento.querySelector(".frente").classList.remove("desativado");*/
 
   setTimeout(imagemDelayVirar, 500, elemento);
 
+  qtdeDeJogadas.push(elemento.innerHTML);
   cartasSelecionadas.push(elemento.innerHTML);
   cartasClicadas = document.querySelectorAll(".selecionado");
 
+  qtdeVirar = document.querySelectorAll(".virar");
   if (cartasSelecionadas[0] === cartasSelecionadas[indice] && indice >= 1) {
-    alert("certo");
     cartasSelecionadas.splice(0, cartasSelecionadas.length);
     naoVirarCartasCertas();
+    setTimeout(fimDeJogo, 1000);
     indice = 0;
   } else if (cartasSelecionadas[0] === cartasSelecionadas[indice]) {
     indice++;
   } else {
-    setTimeout(virarCartasErradas, 1500);
-    setTimeout(imagemDelayDesvirar, 2000);
     cartasSelecionadas.splice(0, cartasSelecionadas.length);
     indice = 0;
+    setTimeout(virarCartasErradas, 1500);
+    setTimeout(imagemDelayDesvirar, 2000);
+    setTimeout(permitirClicarNovamente, 2500);
   }
 }
+
 function naoVirarCartasCertas() {
   for (i = 0; i < cartasClicadas.length; i++) {
     cartasClicadas[i].classList.remove("selecionado");
   }
 }
+
 function virarCartasErradas() {
   for (i = 0; i < cartasClicadas.length; i++) {
     cartasClicadas[i].classList.remove("virar", "selecionado");
@@ -98,9 +107,22 @@ function imagemDelayVirar(a) {
   a.querySelector(".verso").classList.add("desativado");
   a.querySelector(".frente").classList.remove("desativado");
 }
+
 function imagemDelayDesvirar() {
   for (i = 0; i < cartasClicadas.length; i++) {
     cartasClicadas[i].querySelector(".verso").classList.remove("desativado");
     cartasClicadas[i].querySelector(".frente").classList.add("desativado");
+  }
+}
+
+function permitirClicarNovamente() {
+  for (i = 0; i < cartasClicadas.length; i++) {
+    cartasClicadas[i].setAttribute("onClick", "virarCarta(this)");
+  }
+}
+
+function fimDeJogo() {
+  if (qtdeVirar.length == qtdeDeCartas) {
+    alert(`Você ganhou em ${qtdeDeJogadas.length} jogadas!`);
   }
 }

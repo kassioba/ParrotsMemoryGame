@@ -41,18 +41,26 @@ body {
     align-items: center;
     position: relative;
         transition: all 1s linear;
-    }
+}
     
-    
-    
-    .virar {
+.barreira {
+    height: 146px;
+    width: 117px;
+    background-color: wheat;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.verso {
+    cursor: pointer;
+}
+
+.virar {
         transform: rotatey(180deg);
     }
-    
-    
-    
-    
-    .frente {
+
+.frente {
         height: 100%;
         width: 100%;
 }
@@ -60,11 +68,11 @@ body {
 .desativado {
     display: none;
 }
+
 div img {
     width: 100px;
     height: 100px;
 }
-
 
 @media(max-width: 1091px) {
     .container-cartas {
