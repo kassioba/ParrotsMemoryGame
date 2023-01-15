@@ -42,7 +42,7 @@ const container = document.querySelector(".container-cartas");
 
 const imagensEscolhidas = imagens.splice(0, qtdeDeCartas);
 imagensEscolhidas.sort(comparador);
-console.log(imagensEscolhidas);
+
 for (contador = 0; contador < qtdeDeCartas; contador++) {
   container.innerHTML += `
       <div class='carta' data-test="card" onclick="virarCarta(this)">
@@ -124,8 +124,6 @@ function imagemDelayDesvirar() {
 function permitirClicarNovamente() {
   const qtdeVirados = document.querySelectorAll(".virar");
   let u = 0;
-  console.log(qtdeVirados);
-  console.log(seletorCarta);
   for (let i = 0; i < seletorCarta.length; i++) {
     if (seletorCarta[i] !== qtdeVirados[u])
       seletorCarta[i].setAttribute("onClick", "virarCarta(this)");
