@@ -43,14 +43,6 @@ body {
         transition: all 1s linear;
 }
     
-.barreira {
-    height: 146px;
-    width: 117px;
-    background-color: wheat;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
 
 .verso {
     cursor: pointer;
