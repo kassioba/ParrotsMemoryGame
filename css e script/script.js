@@ -45,14 +45,12 @@ imagensEscolhidas.sort(comparador);
 console.log(imagensEscolhidas);
 for (contador = 0; contador < qtdeDeCartas; contador++) {
   container.innerHTML += `
-      <div class='carta' onclick="virarCarta(this)">
-        <div class="verso"><img src="./ícones/back.png" alt=""></div>
-        <div class="frente desativado"><img src="${imagensEscolhidas[contador]}" alt="" class="img-verso"></div>
+      <div class='carta' data-test="card" onclick="virarCarta(this)">
+        <div class="verso"><img src="./ícones/back.png" data-test="face-down-image" alt=""></div>
+        <div class="frente desativado"><img src="${imagensEscolhidas[contador]}" data-test="face-up-image" alt="" class="img-verso"></div>
       </div>
   `;
 }
-
-console.log(container);
 
 const cartasViradas = [];
 
@@ -62,6 +60,7 @@ let indice = 0;
 let cartasClicadas = undefined;
 let qtdeVirar = undefined;
 const qtdeDeJogadas = [];
+const seletorCarta = document.querySelectorAll(".carta");
 
 function virarCarta(elemento) {
   elemento.removeAttribute("onClick");
@@ -74,10 +73,17 @@ function virarCarta(elemento) {
   cartasSelecionadas.push(elemento.innerHTML);
   cartasClicadas = document.querySelectorAll(".selecionado");
 
+  if (cartasClicadas.length >= 2) {
+    for (let index = 0; index < seletorCarta.length; index++) {
+      seletorCarta[index].removeAttribute("onClick");
+    }
+  }
+
   qtdeVirar = document.querySelectorAll(".virar");
   if (cartasSelecionadas[0] === cartasSelecionadas[indice] && indice >= 1) {
     cartasSelecionadas.splice(0, cartasSelecionadas.length);
     naoVirarCartasCertas();
+    setTimeout(permitirClicarNovamente, 1000);
     setTimeout(fimDeJogo, 1000);
     indice = 0;
   } else if (cartasSelecionadas[0] === cartasSelecionadas[indice]) {
@@ -116,8 +122,14 @@ function imagemDelayDesvirar() {
 }
 
 function permitirClicarNovamente() {
-  for (i = 0; i < cartasClicadas.length; i++) {
-    cartasClicadas[i].setAttribute("onClick", "virarCarta(this)");
+  const qtdeVirados = document.querySelectorAll(".virar");
+  let u = 0;
+  console.log(qtdeVirados);
+  console.log(seletorCarta);
+  for (let i = 0; i < seletorCarta.length; i++) {
+    if (seletorCarta[i] !== qtdeVirados[u])
+      seletorCarta[i].setAttribute("onClick", "virarCarta(this)");
+    u++;
   }
 }
 
